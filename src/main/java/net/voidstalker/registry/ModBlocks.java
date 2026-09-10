@@ -40,7 +40,7 @@ public class ModBlocks {
 
     public static final Block ANCIENT_VOID_BLOCK = register(
             "ancient_void_block",
-            AbstractBlock.Settings.create().strength(50.0f, 1200.0f).requiresTool().sounds(BlockSoundGroup.NETHERITE_BLOCK).luminance(state -> 4),
+            AbstractBlock.Settings.create().strength(50.0f, 1200.0f).requiresTool().sounds(BlockSoundGroup.STONE).luminance(state -> 4),
             true
     );
 
