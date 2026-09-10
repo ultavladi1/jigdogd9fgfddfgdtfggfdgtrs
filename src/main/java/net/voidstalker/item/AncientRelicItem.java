@@ -9,36 +9,27 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
-import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
-/**
- * A rare, mysterious relic. Grants brief Night Vision + Resistance when used
- * (it "protects" the holder for a moment) with a long cooldown -- a
- * situational panic button rather than a permanent buff stick.
- */
 public class AncientRelicItem extends Item {
-
-    private static final int COOLDOWN_TICKS = 20 * 60 * 3; // 3 minutes
+    private static final int COOLDOWN_TICKS = 20 * 60 * 3;
 
     public AncientRelicItem(Settings settings) {
         super(settings);
     }
 
     @Override
-    public TypedActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+    public ActionResult use(World world, PlayerEntity player, Hand hand) {
         ItemStack stack = player.getStackInHand(hand);
         if (player.getItemCooldownManager().isCoolingDown(this)) {
-            return TypedActionResult.fail(stack);
+            return ActionResult.FAIL;
         }
-
         if (!world.isClient) {
             player.addStatusEffect(new StatusEffectInstance(StatusEffects.NIGHT_VISION, 20 * 30, 0));
             player.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, 20 * 10, 1));
             world.playSound(null, player.getBlockPos(), SoundEvents.BLOCK_BEACON_ACTIVATE, SoundCategory.PLAYERS, 0.6f, 1.4f);
             player.getItemCooldownManager().set(this, COOLDOWN_TICKS);
         }
-
-        return TypedActionResult.success(stack, world.isClient);
+        return ActionResult.SUCCESS;
     }
 }
