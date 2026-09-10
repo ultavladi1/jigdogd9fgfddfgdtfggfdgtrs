@@ -1,7 +1,6 @@
 package net.voidstalker.entity.custom;
 
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.goal.LookAroundGoal;
 import net.minecraft.entity.ai.goal.LookAtEntityGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
@@ -15,18 +14,12 @@ import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Heightmap;
 import net.minecraft.util.math.random.Random;
+import net.minecraft.world.Heightmap;
 import net.minecraft.world.World;
 import net.voidstalker.config.VoidStalkerConfig;
 import net.voidstalker.registry.ModSounds;
 
-/**
- * The Stalker: a rare, mostly-passive horror entity. It does not chase the
- * player in the usual sense. It watches, sometimes stands dead still,
- * sometimes teleports to reposition itself, and vanishes rather than being
- * "defeated" when it decides an encounter is over.
- */
 public class StalkerEntity extends HostileEntity {
 
     private int watchTicks;
@@ -50,8 +43,6 @@ public class StalkerEntity extends HostileEntity {
     protected void initGoals() {
         this.goalSelector.add(1, new LookAtEntityGoal(this, PlayerEntity.class, 32.0f));
         this.goalSelector.add(2, new LookAroundGoal(this));
-        // Deliberately no wander/attack goals: the Stalker mostly holds
-        // still or repositions itself via teleportation, handled in tick().
     }
 
     @Override
@@ -66,33 +57,18 @@ public class StalkerEntity extends HostileEntity {
     }
 
     private void serverAiTick(ServerWorld world) {
-        if (this.age < this.nextDecisionTick) {
-            return;
-        }
-
+        if (this.age < this.nextDecisionTick) return;
         Random random = this.random;
         this.nextDecisionTick = this.age + 60 + random.nextInt(120);
-
         PlayerEntity nearest = world.getClosestPlayer(this, 40.0);
-        if (nearest == null) {
-            return;
-        }
-
+        if (nearest == null) return;
         double distance = this.distanceTo(nearest);
-
         if (distance < VoidStalkerConfig.get().stalkerVanishDistance && random.nextFloat() < 0.6f) {
             vanish(world);
             return;
         }
-
-        if (random.nextFloat() < 0.12f) {
-            teleportNear(world, nearest);
-        }
-
-        if (random.nextFloat() < VoidStalkerConfig.get().darknessEventChance) {
-            triggerDarkness(nearest);
-        }
-
+        if (random.nextFloat() < 0.12f) teleportNear(world, nearest);
+        if (random.nextFloat() < VoidStalkerConfig.get().darknessEventChance) triggerDarkness(nearest);
         if (random.nextFloat() < 0.05f) {
             world.playSound(null, this.getBlockPos(), ModSounds.STALKER_AMBIENT, SoundCategory.HOSTILE, 0.8f, 0.9f + random.nextFloat() * 0.2f);
         }
@@ -106,7 +82,6 @@ public class StalkerEntity extends HostileEntity {
             double x = target.getX() + Math.cos(angle) * radius;
             double z = target.getZ() + Math.sin(angle) * radius;
             BlockPos pos = world.getTopPosition(Heightmap.Type.MOTION_BLOCKING, BlockPos.ofFloored(x, target.getY(), z));
-
             if (this.teleport(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, false)) {
                 world.spawnParticles(ParticleTypes.PORTAL, this.getX(), this.getY() + 1.0, this.getZ(), 20, 0.3, 0.5, 0.3, 0.02);
                 world.playSound(null, this.getBlockPos(), ModSounds.STALKER_TELEPORT, SoundCategory.HOSTILE, 0.7f, 1.0f);
@@ -127,7 +102,7 @@ public class StalkerEntity extends HostileEntity {
 
     @Override
     public void checkDespawn() {
-        if (this.watchTicks > 20 * 60 * 5) { // 5 minutes of existing
+        if (this.watchTicks > 20 * 60 * 5) {
             this.discard();
             return;
         }
@@ -135,12 +110,8 @@ public class StalkerEntity extends HostileEntity {
     }
 
     @Override
-    protected void playHurtSound(DamageSource source) {
-        // The Stalker does not react to damage the way normal mobs do.
-    }
+    protected void playHurtSound(DamageSource source) {}
 
     @Override
-    protected float getSoundVolume() {
-        return 0.5f;
-    }
+    protected float getSoundVolume() { return 0.5f; }
 }
