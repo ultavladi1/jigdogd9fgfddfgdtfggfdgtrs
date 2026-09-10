@@ -3,7 +3,6 @@ package net.voidstalker.registry;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroups;
 import net.minecraft.item.Rarity;
 import net.minecraft.item.SpawnEggItem;
 import net.minecraft.registry.Registries;
@@ -14,18 +13,12 @@ import net.voidstalker.item.AncientRelicItem;
 import net.voidstalker.item.HorrorDetectorItem;
 
 public class ModItems {
-
-    // --- Materials ---
     public static final Item VOID_CRYSTAL = register("void_crystal", new Item(new Item.Settings()));
     public static final Item VOID_FRAGMENT = register("void_fragment", new Item(new Item.Settings()));
     public static final Item STALKER_EYE = register("stalker_eye", new Item(new Item.Settings().rarity(Rarity.EPIC)));
     public static final Item STRANGE_ARTIFACT = register("strange_artifact", new Item(new Item.Settings().rarity(Rarity.RARE)));
-
-    // --- Functional items ---
     public static final Item ANCIENT_RELIC = register("ancient_relic", new AncientRelicItem(new Item.Settings().maxCount(1).rarity(Rarity.RARE)));
     public static final Item HORROR_DETECTOR = register("horror_detector", new HorrorDetectorItem(new Item.Settings().maxCount(1)));
-
-    // --- Spawn eggs (testing convenience) ---
     public static final Item STALKER_SPAWN_EGG = registerSpawnEgg("stalker_spawn_egg", ModEntities.STALKER);
     public static final Item VOIDLING_SPAWN_EGG = registerSpawnEgg("voidling_spawn_egg", ModEntities.VOIDLING);
     public static final Item VOID_BRUTE_SPAWN_EGG = registerSpawnEgg("void_brute_spawn_egg", ModEntities.VOID_BRUTE);
