@@ -55,12 +55,19 @@ public class ModBlocks {
         return settings.registryKey(RegistryKey.of(RegistryKeys.BLOCK, id));
     }
 
+    private static Item.Settings itemSettings(String path) {
+        Identifier id = Identifier.of(VoidStalkerMod.MOD_ID, path);
+        return new Item.Settings()
+                .useBlockPrefixedTranslationKey()
+                .registryKey(RegistryKey.of(RegistryKeys.ITEM, id));
+    }
+
     private static Block register(String path, AbstractBlock.Settings settings, boolean withItem) {
         Identifier id = Identifier.of(VoidStalkerMod.MOD_ID, path);
         Block block = new Block(settings);
         Registry.register(Registries.BLOCK, id, block);
         if (withItem) {
-            Registry.register(Registries.ITEM, id, new BlockItem(block, new Item.Settings()));
+            Registry.register(Registries.ITEM, id, new BlockItem(block, itemSettings(path)));
         }
         return block;
     }
@@ -69,7 +76,7 @@ public class ModBlocks {
         Identifier id = Identifier.of(VoidStalkerMod.MOD_ID, path);
         Registry.register(Registries.BLOCK, id, block);
         if (withItem) {
-            Registry.register(Registries.ITEM, id, new BlockItem(block, new Item.Settings()));
+            Registry.register(Registries.ITEM, id, new BlockItem(block, itemSettings(path)));
         }
     }
 
