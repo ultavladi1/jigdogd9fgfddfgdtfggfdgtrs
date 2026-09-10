@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " C ",
+    "CEC",
+    " C "
+  ],
+  "key": {
+    "C": { "item": "voidstalker:void_crystal" },
+    "E": { "item": "minecraft:echo_shard" }
+  },
+  "result": { "id": "voidstalker:horror_detector", "count": 1 }
+}

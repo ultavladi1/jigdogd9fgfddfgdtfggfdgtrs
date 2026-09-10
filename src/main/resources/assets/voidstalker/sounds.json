@@ -1,0 +1,38 @@
+{
+  "stalker_appear": {
+    "category": "hostile",
+    "sounds": [ "voidstalker:stalker/appear1" ]
+  },
+  "stalker_ambient": {
+    "category": "hostile",
+    "sounds": [ "voidstalker:stalker/ambient1", "voidstalker:stalker/ambient2" ]
+  },
+  "stalker_teleport": {
+    "category": "hostile",
+    "sounds": [ "voidstalker:stalker/teleport1" ]
+  },
+  "distant_whisper": {
+    "category": "ambient",
+    "sounds": [ "voidstalker:ambient/whisper1", "voidstalker:ambient/whisper2" ]
+  },
+  "voidling_ambient": {
+    "category": "hostile",
+    "sounds": [ "voidstalker:voidling/ambient1" ]
+  },
+  "void_brute_ambient": {
+    "category": "hostile",
+    "sounds": [ "voidstalker:void_brute/ambient1" ]
+  },
+  "void_watcher_ambient": {
+    "category": "hostile",
+    "sounds": [ "voidstalker:void_watcher/ambient1" ]
+  },
+  "random_horror_sting": {
+    "category": "ambient",
+    "sounds": [ "voidstalker:ambient/sting1", "voidstalker:ambient/sting2" ]
+  },
+  "static_noise": {
+    "category": "ambient",
+    "sounds": [ "voidstalker:ambient/static1" ]
+  }
+}

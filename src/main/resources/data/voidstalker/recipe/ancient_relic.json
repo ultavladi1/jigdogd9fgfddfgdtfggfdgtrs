@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "CFC",
+    "FYF",
+    "CFC"
+  ],
+  "key": {
+    "C": { "item": "voidstalker:void_crystal" },
+    "F": { "item": "voidstalker:void_fragment" },
+    "Y": { "item": "voidstalker:stalker_eye" }
+  },
+  "result": { "id": "voidstalker:ancient_relic", "count": 1 }
+}
