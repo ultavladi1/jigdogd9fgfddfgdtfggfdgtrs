@@ -8,6 +8,8 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.intprovider.UniformIntProvider;
@@ -17,36 +19,41 @@ public class ModBlocks {
 
     public static final Block VOID_STONE = register(
             "void_stone",
-            AbstractBlock.Settings.create().strength(2.0f, 6.0f).requiresTool().sounds(BlockSoundGroup.DEEPSLATE),
+            blockSettings("void_stone", AbstractBlock.Settings.create().strength(2.0f, 6.0f).requiresTool().sounds(BlockSoundGroup.DEEPSLATE)),
             true
     );
 
     public static final Block CORRUPTED_STONE = register(
             "corrupted_stone",
-            AbstractBlock.Settings.create().strength(2.5f, 6.0f).requiresTool().sounds(BlockSoundGroup.DEEPSLATE).luminance(state -> 2),
+            blockSettings("corrupted_stone", AbstractBlock.Settings.create().strength(2.5f, 6.0f).requiresTool().sounds(BlockSoundGroup.DEEPSLATE).luminance(state -> 2)),
             true
     );
 
     public static final Block VOID_CRYSTAL_ORE = new ExperienceDroppingBlock(
             UniformIntProvider.create(3, 7),
-            AbstractBlock.Settings.create().strength(4.5f, 8.0f).requiresTool().sounds(BlockSoundGroup.AMETHYST_CLUSTER).luminance(state -> 6)
+            blockSettings("void_crystal_ore", AbstractBlock.Settings.create().strength(4.5f, 8.0f).requiresTool().sounds(BlockSoundGroup.AMETHYST_CLUSTER).luminance(state -> 6))
     );
 
     public static final Block VOID_BRICKS = register(
             "void_bricks",
-            AbstractBlock.Settings.create().strength(3.0f, 6.0f).requiresTool().sounds(BlockSoundGroup.STONE),
+            blockSettings("void_bricks", AbstractBlock.Settings.create().strength(3.0f, 6.0f).requiresTool().sounds(BlockSoundGroup.STONE)),
             true
     );
 
     public static final Block ANCIENT_VOID_BLOCK = register(
             "ancient_void_block",
-            AbstractBlock.Settings.create().strength(50.0f, 1200.0f).requiresTool().sounds(BlockSoundGroup.STONE).luminance(state -> 4),
+            blockSettings("ancient_void_block", AbstractBlock.Settings.create().strength(50.0f, 1200.0f).requiresTool().sounds(BlockSoundGroup.STONE).luminance(state -> 4)),
             true
     );
 
     public static final Block VOID_LANTERN = new LanternBlock(
-            AbstractBlock.Settings.create().strength(0.5f).sounds(BlockSoundGroup.LANTERN).luminance(state -> 15).nonOpaque()
+            blockSettings("void_lantern", AbstractBlock.Settings.create().strength(0.5f).sounds(BlockSoundGroup.LANTERN).luminance(state -> 15).nonOpaque())
     );
+
+    private static AbstractBlock.Settings blockSettings(String path, AbstractBlock.Settings settings) {
+        Identifier id = Identifier.of(VoidStalkerMod.MOD_ID, path);
+        return settings.registryKey(RegistryKey.of(RegistryKeys.BLOCK, id));
+    }
 
     private static Block register(String path, AbstractBlock.Settings settings, boolean withItem) {
         Identifier id = Identifier.of(VoidStalkerMod.MOD_ID, path);
