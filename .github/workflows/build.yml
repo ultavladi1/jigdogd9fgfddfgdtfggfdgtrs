@@ -6,6 +6,9 @@ on:
   pull_request:
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -29,3 +32,14 @@ jobs:
         with:
           name: void-stalker-jar
           path: build/libs/*.jar
+
+      - name: Publish JAR release
+        if: github.event_name == 'push'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="build-${{ github.run_number }}"
+          gh release create "$TAG" build/libs/*.jar \
+            --title "Void Stalker build ${{ github.run_number }}" \
+            --notes "Minecraft 1.21.4 Fabric build. Download the .jar directly below." \
+            --target "${{ github.sha }}"
