@@ -5,8 +5,6 @@ import net.minecraft.entity.ai.control.FlightMoveControl;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.goal.LookAroundGoal;
 import net.minecraft.entity.ai.goal.LookAtEntityGoal;
-import net.minecraft.entity.ai.pathing.EntityNavigation;
-import net.minecraft.entity.ai.pathing.FlightNavigation;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -17,14 +15,7 @@ import net.minecraft.world.World;
 
 import java.util.EnumSet;
 
-/**
- * A floating, very rare creature. Its "unusual attack" is a creeping
- * Blindness field it inflicts on players who linger too close while it
- * stares at them, rather than a projectile entity (which would need extra
- * registration and client rendering work).
- */
 public class VoidWatcherEntity extends HostileEntity {
-
     public VoidWatcherEntity(EntityType<? extends HostileEntity> type, World world) {
         super(type, world);
         this.setNoGravity(true);
@@ -44,14 +35,6 @@ public class VoidWatcherEntity extends HostileEntity {
         this.goalSelector.add(1, new LookAtEntityGoal(this, PlayerEntity.class, 24.0f));
         this.goalSelector.add(2, new LookAroundGoal(this));
         this.goalSelector.add(3, new StareDreadGoal(this));
-    }
-
-    @Override
-    protected EntityNavigation createNavigation(World world) {
-        FlightNavigation navigation = new FlightNavigation(this, world);
-        navigation.setCanPathThroughDoors(false);
-        navigation.setCanSwim(true);
-        return navigation;
     }
 
     private static class StareDreadGoal extends Goal {
